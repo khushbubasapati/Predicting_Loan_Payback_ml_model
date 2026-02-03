@@ -89,6 +89,8 @@ loan-project/
     |   ├──  model.pkl
     │   ├── predict.py
 │   ├── schema
+    |   ├──  user_input.py
+    |   ├──  prediction_response.py
 │   ├── app.py
 │   ├── Predicting_loan_payback.ipynb
 │   ├── requirements.txt
@@ -99,6 +101,8 @@ loan-project/
 │   ├── requirements.txt
 │   └── Dockerfile
 │
+├── .dockerignore
+├── .gitignore
 └── docker-compose.yml
 ```
 

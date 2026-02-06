@@ -2,8 +2,7 @@ from pydantic import BaseModel,Field
 from typing import Annotated,Literal
 
 class UserInput(BaseModel):
-    id: Annotated[int,Field(...,description="Unique identifier for the loan application")]
-    
+
     annual_income: Annotated[float,Field(...,gt=0,description="Applicant's annual income")]
     
     debt_to_income_ratio: Annotated[float,Field(...,ge=0,le=1,description="Debt-to-income ratio as a percentage")]

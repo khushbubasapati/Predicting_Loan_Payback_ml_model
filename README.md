@@ -11,8 +11,8 @@ An end-to-end **machine learning + deployment** project that predicts whether a 
 * Handled **class imbalance** using:
 
   * `scale_pos_weight`
-  * **custom decision thresholding**
-* Improved **default-class recall** from **51% → 71%** **without loss of overall accuracy**
+
+* Selected optimal probability threshold using ROC curve
 * Deployed model as a **FastAPI inference service**
 * Built an interactive **Streamlit UI** for predictions
 * Fully **Dockerized** backend & frontend
@@ -38,12 +38,12 @@ An end-to-end **machine learning + deployment** project that predicts whether a 
 
 | Metric                        | Value      |
 | ----------------------------- | ---------- |
-| ROC–AUC                       | ~0.92      |
-| Default Recall (before)       | 51%        |
-| Default Recall (after tuning) | **71%**    |
-| Accuracy                      | Maintained |
+| Accuracy                      | 0.86       |
+| ROC–AUC                       | 0.92       |
+| Cross-Validation ROC-AUC      | 0.92       |
 
-> The focus was on improving **risk detection (recall for defaulters)** rather than naive accuracy.
+
+> Focused on probability prediction and threshold tuning rather than relying on default 0.5 classification.
 
 ---
 
@@ -53,10 +53,10 @@ An end-to-end **machine learning + deployment** project that predicts whether a 
 User (Browser)
    │
    ▼
-Streamlit UI (Docker Container)
-   │  HTTP
+Streamlit UI (Docker)
+   │  
    ▼
-FastAPI Inference API (Docker Container)
+FastAPI API (Docker)
    │
    ▼
 XGBoost Model

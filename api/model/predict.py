@@ -8,7 +8,7 @@ with open("model/model.pkl","rb") as f:
 # mlflow
 MODEL_VERSION = "1.0.0"
 
-THRESOLD = 0.35
+THRESOLD = 0.5
 
 def predict_output(user_input: dict) -> dict:
 

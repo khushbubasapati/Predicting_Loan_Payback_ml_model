@@ -157,7 +157,7 @@ with st.form("loan_form"):
     employment = st.selectbox("Employment",["Employed","Self-employed","Unemployed","Student","Retired"])
     education = st.selectbox("Education",["High School","Bachelor's","Master's","PhD","Other"])
     purpose = st.selectbox("Loan Purpose",["Other","Debt","Home","Education","Car","Medical","Business"])
-    grade = st.selectbox("Credit Grade",["A1","A2","B1","B2","C1","C2","D1","D2","E1","F1"])
+    grade = st.selectbox("Credit Grade",['A1', 'A2', 'A3', 'A4', 'A5', 'B1', 'B2', 'B3', 'B4', 'B5', 'C1', 'C2', 'C3', 'C4', 'C5', 'D1', 'D2', 'D3', 'D4', 'D5', 'E1', 'E2', 'E3', 'E4', 'E5', 'F1', 'F2', 'F3', 'F4', 'F5'])
 
     submit = st.form_submit_button("🔮 Predict")
 

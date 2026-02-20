@@ -1,0 +1,32 @@
+# DATA INGESTION
+data_ingestion:
+  train_path: data/raw/train.csv
+  test_path: data/raw/test.csv
+  target_column: loan_paid_back
+  id_column: id
+
+# FEATURES
+features:
+  # Numeric features (5 total)
+  numeric:
+    - annual_income
+    - debt_to_income_ratio
+    - credit_score
+    - loan_amount
+    - interest_rate
+  
+  # Categorical features (6 total)
+  categorical:
+    - gender
+    - marital_status
+    - education_level
+    - employment_status
+    - loan_purpose
+    - grade_subgrade  
+
+# MODEL TRAINING
+model_training:
+  val_size: 0.2
+  random_state: 42
+  n_trials: 10        
+  cv_folds: 3          

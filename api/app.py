@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from schema.user_input import UserInput
 from schema.prediction_response import PredictionResponse
-from model.predict import model,MODEL_VERSION,predict_output
+from predict import model,MODEL_VERSION,predict_output
 import pickle
 import pandas as pd
   

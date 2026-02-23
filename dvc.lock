@@ -1,0 +1,184 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 324bea890d214b722877c99e346c17c8
+      size: 23021430
+    - path: data/raw/train.csv
+      hash: md5
+      md5: c2eecbd7d27b192323be07dd578fc766
+      size: 55988519
+    - path: params.yaml
+      hash: md5
+      md5: 8a568cba4b9e0ee380112b3e0d0e0180
+      size: 603
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: da3e656f5d17ec5011e9dde00d664c85
+      size: 3281
+    params:
+      params.yaml:
+        data_ingestion.id_column: id
+        data_ingestion.target_column: loan_paid_back
+        data_ingestion.test_path: data/raw/test.csv
+        data_ingestion.train_path: data/raw/train.csv
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 324bea890d214b722877c99e346c17c8
+      size: 23021430
+    - path: data/processed/train.csv
+      hash: md5
+      md5: c2eecbd7d27b192323be07dd578fc766
+      size: 55988519
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 324bea890d214b722877c99e346c17c8
+      size: 23021430
+    - path: data/processed/train.csv
+      hash: md5
+      md5: c2eecbd7d27b192323be07dd578fc766
+      size: 55988519
+    - path: params.yaml
+      hash: md5
+      md5: 8a568cba4b9e0ee380112b3e0d0e0180
+      size: 603
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 11e547d0826866ced5daef094dfccd76
+      size: 5136
+    params:
+      params.yaml:
+        data_ingestion.id_column: id
+        data_ingestion.target_column: loan_paid_back
+        features.categorical:
+        - gender
+        - marital_status
+        - education_level
+        - employment_status
+        - loan_purpose
+        - grade_subgrade
+        features.numeric:
+        - annual_income
+        - debt_to_income_ratio
+        - credit_score
+        - loan_amount
+        - interest_rate
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: 0064e9a0d000dd5f1142a36d96dd75e9
+      size: 21239444
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: eafa8a3f95f8834958b99107f762b889
+      size: 49565677
+    - path: data/processed/grade_order.json
+      hash: md5
+      md5: 4fc8864009b1caeb540b4d187ac4edea
+      size: 180
+    - path: data/processed/test_ids.csv
+      hash: md5
+      md5: 2d0e41b52af20791a327c675ad09eced
+      size: 1781986
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 6f25b380c3c3f5a63ed80be60850163b
+      size: 2375991
+  model_training:
+    cmd: python src/model_training.py
+    deps:
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: eafa8a3f95f8834958b99107f762b889
+      size: 49565677
+    - path: data/processed/grade_order.json
+      hash: md5
+      md5: 4fc8864009b1caeb540b4d187ac4edea
+      size: 180
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 6f25b380c3c3f5a63ed80be60850163b
+      size: 2375991
+    - path: params.yaml
+      hash: md5
+      md5: 8a568cba4b9e0ee380112b3e0d0e0180
+      size: 603
+    - path: src//model_training.py
+      hash: md5
+      md5: f3abcb843bc989065a1df367ebfd8ad5
+      size: 10302
+    params:
+      params.yaml:
+        features.categorical:
+        - gender
+        - marital_status
+        - education_level
+        - employment_status
+        - loan_purpose
+        - grade_subgrade
+        features.numeric:
+        - annual_income
+        - debt_to_income_ratio
+        - credit_score
+        - loan_amount
+        - interest_rate
+        model_training.cv_folds: 3
+        model_training.n_trials: 10
+        model_training.random_state: 42
+        model_training.val_size: 0.2
+    outs:
+    - path: data/processed/X_val.csv
+      hash: md5
+      md5: 26f3d2b7e44ca4eb7377a4e39ff63aa5
+      size: 9912243
+    - path: data/processed/y_val.csv
+      hash: md5
+      md5: 352bfdc98b581e4e04f2cdcec66b7e08
+      size: 475211
+    - path: model/model.pkl
+      hash: md5
+      md5: e1da0888a1cf130696e6ad64b1c95a8c
+      size: 1485710
+    - path: model/model_metadata.json
+      hash: md5
+      md5: d97f595e4f63d27d31ea0300d4b64b94
+      size: 385
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: data/processed/X_val.csv
+      hash: md5
+      md5: 26f3d2b7e44ca4eb7377a4e39ff63aa5
+      size: 9912243
+    - path: data/processed/y_val.csv
+      hash: md5
+      md5: 352bfdc98b581e4e04f2cdcec66b7e08
+      size: 475211
+    - path: model/model.pkl
+      hash: md5
+      md5: e1da0888a1cf130696e6ad64b1c95a8c
+      size: 1485710
+    - path: params.yaml
+      hash: md5
+      md5: 8a568cba4b9e0ee380112b3e0d0e0180
+      size: 603
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 827c67cdf7e2bb0fe410a205affe79fd
+      size: 9085
+    outs:
+    - path: reports/classification_report.json
+      hash: md5
+      md5: 6d9e0d0a1e144a1833c24506e74d5635
+      size: 634
+    - path: reports/metrics.json
+      hash: md5
+      md5: 2131dbc10485e56d329cae516fbd5099
+      size: 418

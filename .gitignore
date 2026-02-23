@@ -2,6 +2,8 @@ projectworkflow.txt
 data
 model
 reports
+mlruns
+mlflow.db
 
 
 # Byte-compiled / optimized / DLL files

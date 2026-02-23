@@ -13,8 +13,8 @@ stages:
       size: 55988519
     - path: params.yaml
       hash: md5
-      md5: 8a568cba4b9e0ee380112b3e0d0e0180
-      size: 603
+      md5: b47b7df47d95cfe8ac35de4b2d21e097
+      size: 602
     - path: src/data_ingestion.py
       hash: md5
       md5: da3e656f5d17ec5011e9dde00d664c85
@@ -47,8 +47,8 @@ stages:
       size: 55988519
     - path: params.yaml
       hash: md5
-      md5: 8a568cba4b9e0ee380112b3e0d0e0180
-      size: 603
+      md5: b47b7df47d95cfe8ac35de4b2d21e097
+      size: 602
     - path: src/data_preprocessing.py
       hash: md5
       md5: 11e547d0826866ced5daef094dfccd76
@@ -108,12 +108,12 @@ stages:
       size: 2375991
     - path: params.yaml
       hash: md5
-      md5: 8a568cba4b9e0ee380112b3e0d0e0180
-      size: 603
+      md5: b47b7df47d95cfe8ac35de4b2d21e097
+      size: 602
     - path: src//model_training.py
       hash: md5
-      md5: f3abcb843bc989065a1df367ebfd8ad5
-      size: 10302
+      md5: 863faca4f7d66275e06123348799e254
+      size: 11002
     params:
       params.yaml:
         features.categorical:
@@ -130,7 +130,7 @@ stages:
         - loan_amount
         - interest_rate
         model_training.cv_folds: 3
-        model_training.n_trials: 10
+        model_training.n_trials: 15
         model_training.random_state: 42
         model_training.val_size: 0.2
     outs:
@@ -144,12 +144,12 @@ stages:
       size: 475211
     - path: model/model.pkl
       hash: md5
-      md5: e1da0888a1cf130696e6ad64b1c95a8c
-      size: 1485710
+      md5: 679cf9ea8d52f1312f39dbf5e400ac85
+      size: 763942
     - path: model/model_metadata.json
       hash: md5
-      md5: d97f595e4f63d27d31ea0300d4b64b94
-      size: 385
+      md5: 096d6bdce18e819d36eae594e86ca8cb
+      size: 387
   model_evaluation:
     cmd: python src/model_evaluation.py
     deps:
@@ -163,22 +163,22 @@ stages:
       size: 475211
     - path: model/model.pkl
       hash: md5
-      md5: e1da0888a1cf130696e6ad64b1c95a8c
-      size: 1485710
+      md5: 679cf9ea8d52f1312f39dbf5e400ac85
+      size: 763942
     - path: params.yaml
       hash: md5
-      md5: 8a568cba4b9e0ee380112b3e0d0e0180
-      size: 603
+      md5: b47b7df47d95cfe8ac35de4b2d21e097
+      size: 602
     - path: src/model_evaluation.py
       hash: md5
-      md5: 827c67cdf7e2bb0fe410a205affe79fd
-      size: 9085
+      md5: 23b4568edecb15fb7bd585f8bbc8cd1a
+      size: 9690
     outs:
     - path: reports/classification_report.json
       hash: md5
-      md5: 6d9e0d0a1e144a1833c24506e74d5635
-      size: 634
+      md5: 81f2350ff13f141b34f641a7c11ab97d
+      size: 633
     - path: reports/metrics.json
       hash: md5
-      md5: 2131dbc10485e56d329cae516fbd5099
-      size: 418
+      md5: b2acc868ab2549dc9f90b79b1e74631b
+      size: 420

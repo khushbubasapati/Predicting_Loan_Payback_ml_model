@@ -12,6 +12,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
 from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
 from sklearn.metrics import roc_auc_score
+import mlflow
+import mlflow.sklearn
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -241,25 +243,36 @@ def save_model(pipeline: Pipeline, study: optuna.Study, X_val: pd.DataFrame,
 
 def main():
     try:
-        params = load_params(params_path='params.yaml')
+        mlflow.set_experiment("Loan_Default_Prediction")
+
+        with mlflow.start_run():
+            params = load_params(params_path='params.yaml')
+            mlflow.log_params(params['model_training'])
+            X_train, y_train, grades = load_data(data_path='./data')
+            preprocessor = build_preprocessor(params, grades)
+            scale_pos_weight = len(y_train[y_train == 0]) / len(y_train[y_train == 1])
+            mlflow.log_param("scale_pos_weight", scale_pos_weight)
+
+            logger.debug('scale_pos_weight: %.4f', scale_pos_weight)
         
-        X_train, y_train, grades = load_data(data_path='./data')
+            study = optuna_tuning(X_train, y_train, preprocessor, scale_pos_weight, params)
+            
+            # Log best hyperparameters from Optuna
+            mlflow.log_params(study.best_params)
+            mlflow.log_metric("optuna_cv_auc", study.best_value)
         
-        preprocessor = build_preprocessor(params, grades)
+            pipeline, X_val, y_val = train_final_model(X_train, y_train, preprocessor,study.best_params, scale_pos_weight, params)
+             
+             # Compute validation AUC
+            y_val_prob = pipeline.predict_proba(X_val)[:, 1]
+            val_auc = roc_auc_score(y_val, y_val_prob)
+            mlflow.log_metric("validation_auc", val_auc)
+
+            # Log model
+            mlflow.sklearn.log_model(pipeline, "model")
+            save_model(pipeline, study, X_val, y_val, model_path='./model', data_path='./data')
         
-        scale_pos_weight = len(y_train[y_train == 0]) / len(y_train[y_train == 1])
-        logger.debug('scale_pos_weight: %.4f', scale_pos_weight)
-        
-        study = optuna_tuning(X_train, y_train, preprocessor, scale_pos_weight, params)
-        
-        pipeline, X_val, y_val = train_final_model(
-            X_train, y_train, preprocessor,
-            study.best_params, scale_pos_weight, params
-        )
-        
-        save_model(pipeline, study, X_val, y_val, model_path='./model', data_path='./data')
-        
-        logger.info('Model training completed successfully')
+            logger.info('Model training completed successfully')
         
     except Exception as e:
         logger.error('Failed to complete the model training process: %s', e)

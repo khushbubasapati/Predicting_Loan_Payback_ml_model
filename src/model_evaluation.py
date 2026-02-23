@@ -5,6 +5,7 @@ import json
 import pickle
 import logging
 import yaml
+import mlflow
 from sklearn.metrics import roc_auc_score, roc_curve, classification_report
 
 # Ensure the "logs" directory exists
@@ -220,24 +221,36 @@ def save_metrics(model_path: str, output_path: str, optimal_threshold: float = N
 
 def main():
     try:
-        params = load_params(params_path='params.yaml')
+        mlflow.set_experiment("Loan_Default_Prediction")
+
+        with mlflow.start_run(run_name="Evaluation"):
+            params = load_params(params_path='params.yaml')
         
-        pipeline = load_model(model_path='./model')
+            pipeline = load_model(model_path='./model')
         
-        X_test, test_ids, X_val, y_val = load_data(data_path='./data')
+            X_test, test_ids, X_val, y_val = load_data(data_path='./data')
         
         # Calculate optimal threshold and evaluate on validation set
-        if X_val is not None and y_val is not None:
-            optimal_threshold = calculate_optimal_threshold(pipeline, X_val, y_val)
-            evaluate_on_validation(pipeline, X_val, y_val, optimal_threshold, 
+            if X_val is not None and y_val is not None:
+                optimal_threshold = calculate_optimal_threshold(pipeline, X_val, y_val)
+                mlflow.log_metric("optimal_threshold", optimal_threshold)
+                
+                y_val_prob = pipeline.predict_proba(X_val)[:, 1]
+                val_auc = roc_auc_score(y_val, y_val_prob)
+                mlflow.log_metric("evaluation_val_auc", val_auc)
+                
+                evaluate_on_validation(pipeline, X_val, y_val, optimal_threshold, 
                                  output_path='./reports')
             
-            save_metrics(model_path='./model', output_path='./reports', 
+                save_metrics(model_path='./model', output_path='./reports', 
                         optimal_threshold=optimal_threshold)
-        else:
-            logger.warning('Validation data not available. Skipping classification report.')
-            logger.warning('To enable this, save X_val and y_val during training.')
-            save_metrics(model_path='./model', output_path='./reports', 
+                
+                 # Log classification report
+                mlflow.log_artifact("./reports/classification_report.json")
+            else:
+                logger.warning('Validation data not available. Skipping classification report.')
+                logger.warning('To enable this, save X_val and y_val during training.')
+                save_metrics(model_path='./model', output_path='./reports', 
                         optimal_threshold=None)
         
         logger.info('Model evaluation completed successfully')

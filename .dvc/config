@@ -1,0 +1,6 @@
+[core]
+    remote = myremote
+['remote "dvcstore"']
+    url = s3://mlops-loan-api-project
+['remote "myremote"']
+    url = s3://mlops-loan-api-project/dvc-store

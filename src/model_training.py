@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split, cross_val_score, Stratifie
 from sklearn.metrics import roc_auc_score
 import mlflow
 import mlflow.sklearn
+import dagshub
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
@@ -243,6 +244,8 @@ def save_model(pipeline: Pipeline, study: optuna.Study, X_val: pd.DataFrame,
 
 def main():
     try:
+        dagshub.init(repo_owner='khushbubasapati', repo_name='Predicting_Loan_Payback_ml_model', mlflow=True)
+        mlflow.set_tracking_uri("https://dagshub.com/khushbubasapati/Predicting_Loan_Payback_ml_model.mlflow")
         mlflow.set_experiment("Loan_Default_Prediction")
 
         with mlflow.start_run():

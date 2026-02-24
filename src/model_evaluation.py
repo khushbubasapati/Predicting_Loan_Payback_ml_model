@@ -6,6 +6,7 @@ import pickle
 import logging
 import yaml
 import mlflow
+import dagshub
 from sklearn.metrics import roc_auc_score, roc_curve, classification_report
 
 # Ensure the "logs" directory exists
@@ -221,6 +222,9 @@ def save_metrics(model_path: str, output_path: str, optimal_threshold: float = N
 
 def main():
     try:
+        dagshub.init(repo_owner='khushbubasapati', repo_name='Predicting_Loan_Payback_ml_model', mlflow=True)
+        mlflow.set_tracking_uri("https://dagshub.com/khushbubasapati/Predicting_Loan_Payback_ml_model.mlflow")
+        
         mlflow.set_experiment("Loan_Default_Prediction")
 
         with mlflow.start_run(run_name="Evaluation"):

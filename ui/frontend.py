@@ -121,9 +121,38 @@ button {
     background:transparent!important;
 }
 
-/* HIDE TEXT CURSOR */
-input, select {
+/* SHOW cursor in text inputs, hide in selects */
+input {
+    caret-color: white !important;
+}
+
+/* Hide the blinking text cursor inside selectbox */
+[data-baseweb="select"] input,
+[data-baseweb="select"] [contenteditable] {
     caret-color: transparent !important;
+    cursor: default !important;
+}
+
+/* Remove the | cursor artifact in select displayed value */
+[data-baseweb="select"] [data-testid="stSelectbox"] div,
+[data-baseweb="select"] span,
+[data-baseweb="select"] > div > div {
+    caret-color: transparent !important;
+    cursor: pointer !important;
+    user-select: none !important;
+}
+
+/* Nuke ALL inputs inside select completely */
+[data-baseweb="select"] input {
+    caret-color: transparent !important;
+    cursor: pointer !important;
+    color: transparent !important;
+    text-shadow: 0 0 0 white !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    position: absolute !important;
 }
 
 </style>

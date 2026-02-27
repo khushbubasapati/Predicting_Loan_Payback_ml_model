@@ -1,16 +1,12 @@
 
 services:
   api:
-    build:
-      context: .
-      dockerfile: api/Dockerfile
-    image: khushbu308/loan-api:latest
+    image: khushbu308/loan-api:v2.0
     container_name: loan_api
     ports:
       - "8000:8000"
 
   ui:
-    build: ./ui
     image: khushbu308/loan-prediction-ui:latest
     container_name: loan_ui
     ports:

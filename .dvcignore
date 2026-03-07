@@ -1,3 +1,43 @@
-# Add patterns of files dvc should ignore, which could improve
-# the performance. Learn more at
-# https://dvc.org/doc/user-guide/dvcignore
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+myenv/
+venv/
+
+# Code (tracked by Git)
+*.py
+*.md
+
+# Config (tracked by Git)
+params.yaml
+dvc.yaml
+dvc.lock
+requirements.txt
+
+# Generated files
+logs/
+mlruns/
+mlflow.db
+reports/
+
+# API & UI
+api/
+ui/
+src/
+
+# IDE
+.vscode/
+.idea/
+
+# Tests
+tests/
+
+# CI/CD
+.github/
+
+# Docker
+docker-compose.yml
+.dockerignore
+Dockerfile
+EOF

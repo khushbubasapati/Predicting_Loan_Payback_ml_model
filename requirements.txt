@@ -1,0 +1,28 @@
+ipykernel
+
+# ML Pipeline
+numpy
+pandas 
+matplotlib
+seaborn
+xgboost == 3.1.3
+scikit-learn == 1.8.0
+optuna == 4.7.0
+
+# MLOps
+mlflow==3.10.0
+dagshub
+dvc[s3]
+
+# API
+fastapi
+uvicorn == 0.36.0
+
+# UI
+streamlit
+requests
+
+# Testing
+pytest
+pytest-cov
+httpx

@@ -8,3 +8,41 @@ venv/
 .env/
 .ipynb_checkpoints/
 
+# Data
+data/raw/*.csv
+data/processed/*.csv
+
+# Logs
+logs/
+*.log
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Notebooks
+notebooks/
+*.ipynb
+
+# DVC
+.dvc/
+*.dvc
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+README.md
+LICENSE
+.env
+EOF

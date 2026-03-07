@@ -1,10 +1,13 @@
 projectworkflow.txt
 data
-model
+#model
 reports
 mlruns
 mlflow.db
-
+/model/model.pkl
+/model/model_metadata.json
+api/model/model.pkl
+api/model/model_metadata.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

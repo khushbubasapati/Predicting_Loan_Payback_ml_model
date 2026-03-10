@@ -1,0 +1,15 @@
+{
+  "optuna_cv_auc": 0.920859,
+  "val_auc": 0.920459,
+  "best_params": {
+    "n_estimators": 481,
+    "max_depth": 4,
+    "learning_rate": 0.09882126176239633,
+    "subsample": 0.8346562410220799,
+    "colsample_bytree": 0.9989921796519489,
+    "min_child_weight": 8,
+    "gamma": 0.37791527921683976,
+    "reg_alpha": 0.00010717129493924099,
+    "reg_lambda": 0.9805302031690503
+  }
+}

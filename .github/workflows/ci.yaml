@@ -28,7 +28,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests/ -v --cov=src --cov=api
-    
+
   build-api:
     runs-on: ubuntu-latest
     needs: test
@@ -42,7 +42,7 @@ jobs:
     
     - name: Build API Docker image
       run: |
-        docker build -t loan-api:test ./api
+        docker build -f api/Dockerfile -t loan-api:test .
     
     - name: Test API container
       run: |
@@ -61,4 +61,4 @@ jobs:
     
     - name: Build UI Docker image
       run: |
-        docker build -t loan-ui:test ./ui
+        docker build -f ui/Dockerfile -t loan-ui:test .

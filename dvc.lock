@@ -112,8 +112,8 @@ stages:
       size: 602
     - path: src//model_training.py
       hash: md5
-      md5: 863faca4f7d66275e06123348799e254
-      size: 11002
+      md5: ad28bc73d1e3a4667d79d467a49701e1
+      size: 11238
     params:
       params.yaml:
         features.categorical:
@@ -144,12 +144,12 @@ stages:
       size: 475211
     - path: model/model.pkl
       hash: md5
-      md5: 679cf9ea8d52f1312f39dbf5e400ac85
-      size: 763942
+      md5: b3041e5fe3a5b80994a6c17f70a87354
+      size: 849757
     - path: model/model_metadata.json
       hash: md5
-      md5: 096d6bdce18e819d36eae594e86ca8cb
-      size: 387
+      md5: 77f92037a7740f7c626c7fb104ff4617
+      size: 384
   model_evaluation:
     cmd: python src/model_evaluation.py
     deps:
@@ -163,22 +163,22 @@ stages:
       size: 475211
     - path: model/model.pkl
       hash: md5
-      md5: 679cf9ea8d52f1312f39dbf5e400ac85
-      size: 763942
+      md5: b3041e5fe3a5b80994a6c17f70a87354
+      size: 849757
     - path: params.yaml
       hash: md5
       md5: b47b7df47d95cfe8ac35de4b2d21e097
       size: 602
     - path: src/model_evaluation.py
       hash: md5
-      md5: 23b4568edecb15fb7bd585f8bbc8cd1a
-      size: 9690
+      md5: 923150c3249d6978cbe48fc160582d63
+      size: 9935
     outs:
     - path: reports/classification_report.json
       hash: md5
-      md5: 81f2350ff13f141b34f641a7c11ab97d
-      size: 633
+      md5: 07af83eada40fd04fe080582e48ee136
+      size: 634
     - path: reports/metrics.json
       hash: md5
-      md5: b2acc868ab2549dc9f90b79b1e74631b
-      size: 420
+      md5: 9dbfa34f6ebedfac9dbd4ab5d59d8441
+      size: 417

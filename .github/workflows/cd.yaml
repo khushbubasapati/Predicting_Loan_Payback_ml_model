@@ -29,17 +29,19 @@ jobs:
     - name: Build and push API
       uses: docker/build-push-action@v4
       with:
-        context: ./api
+        context: .
+        file: ./api/Dockerfile
         push: true
         tags: |
-          ${{ env.DOCKERHUB_USERNAME }}/loan-api:latest
+          ${{ env.DOCKERHUB_USERNAME }}/loan-api:v3
           ${{ env.DOCKERHUB_USERNAME }}/loan-api:${{ github.sha }}
     
     - name: Build and push UI
       uses: docker/build-push-action@v4
       with:
-        context: ./ui
+        context: .
+        file: ./ui/Dockerfile
         push: true
         tags: |
-          ${{ env.DOCKERHUB_USERNAME }}/loan-ui:latest
+          ${{ env.DOCKERHUB_USERNAME }}/loan-ui:v3
           ${{ env.DOCKERHUB_USERNAME }}/loan-ui:${{ github.sha }}

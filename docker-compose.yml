@@ -1,13 +1,13 @@
 
 services:
   api:
-    image: khushbu308/loan-api:v2.0
+    image: khushbu308/loan-api:v3
     container_name: loan_api
     ports:
       - "8000:8000"
 
   ui:
-    image: khushbu308/loan-prediction-ui:latest
+    image: khushbu308/loan-ui:v3
     container_name: loan_ui
     ports:
       - "8501:8501"

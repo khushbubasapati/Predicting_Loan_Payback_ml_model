@@ -366,6 +366,7 @@ The application is deployed on **AWS EC2** using Docker containers for scalable,
 │  • API: http://EC2_IP:8000                                   │
 │  • UI:  http://EC2_IP:8501                                   │
 └──────────────────────────────────────────────────────────────┘
+```
 
 ## 🎯 Key Technical Achievements
 

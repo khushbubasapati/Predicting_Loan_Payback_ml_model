@@ -1,6 +1,6 @@
 # Loan Default Prediction - End-to-End MLOps Project
 
-An end-to-end **production-grade machine learning system** that predicts whether a loan will be **paid back or defaulted**. This project demonstrates the complete ML lifecycle from experimentation to deployment, featuring **reproducible ML pipelines**, **experiment tracking**, **version control**, and **automated CI/CD**.
+An end-to-end **production-grade machine learning system** that predicts whether a loan will be **paid back or defaulted**. This project demonstrates the complete ML lifecycle from experimentation to deployment, featuring **reproducible ML pipelines**, **experiment tracking**, **version control**, **automated CI/CD** and **cloud deployment on AWS**.
 
 ---
 
@@ -13,6 +13,7 @@ An end-to-end **production-grade machine learning system** that predicts whether
 * Achieved **89% recall** on positive class using **optimal threshold selection** (Youden's J-statistic)
 * Deployed model as **FastAPI REST API** with **Streamlit UI**, fully **Dockerized**
 * Automated **CI/CD pipeline** with **GitHub Actions** (testing, building, deployment)
+* **Production deployment on AWS EC2** with Docker Compose orchestration
 * Handled **class imbalance** using `scale_pos_weight` and **Optuna** hyperparameter optimization
 
 ---
@@ -70,6 +71,7 @@ An end-to-end **production-grade machine learning system** that predicts whether
 * **Streamlit**: Interactive web UI for predictions
 * **Docker**: Containerized API and UI services
 * **Docker Compose**: Multi-container orchestration
+* **AWS EC2**: Cloud deployment (t2.small instance)
 
 ### **CI/CD & Automation**
 * **GitHub Actions**: Automated testing, linting, Docker builds
@@ -97,7 +99,7 @@ An end-to-end **production-grade machine learning system** that predicts whether
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  Production Deployment                       │
+│                  Production Deployment (AWS EC2)                      │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  User (Browser) → Streamlit UI (Docker) → FastAPI (Docker)  │
@@ -319,6 +321,52 @@ All experiments synced to DagShub for:
 
 ---
 
+## ☁️ AWS Deployment
+
+### **Production Deployment on AWS EC2**
+
+The application is deployed on **AWS EC2** using Docker containers for scalable, production-ready inference.
+
+### **Infrastructure**
+
+| Component | Specification |
+|-----------|---------------|
+| **Instance Type** | t2.small (1 vCPU, 2GB RAM) |
+| **OS** | Ubuntu Server 22.04 LTS |
+| **Storage** | 20 GB EBS (gp3) |
+| **Deployment Method** | Docker Compose with pre-built images |
+| **Networking** | Security groups for ports 22, 8000, 8501 |
+
+### **Deployment Architecture**
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    GitHub Repository                          │
+│                           ↓                                   │
+│                    GitHub Actions (CI/CD)                     │
+│                           ↓                                   │
+│                    Docker Hub Registry                        │
+│               (khushbu308/loan-api:v3)                       │
+│               (khushbu308/loan-ui:v3)                        │
+└────────────────────────┬─────────────────────────────────────┘
+                         │
+                         │ docker pull
+                         ▼
+┌──────────────────────────────────────────────────────────────┐
+│                  AWS EC2 Instance (Production)                │
+│  ┌────────────────────────────────────────────────────────┐  │
+│  │  Docker Compose                                        │  │
+│  │  ┌──────────────────┐    ┌──────────────────┐        │  │
+│  │  │  FastAPI         │◄──►│  Streamlit UI    │        │  │
+│  │  │  Port: 8000      │    │  Port: 8501      │        │  │
+│  │  │  loan-api:v3     │    │  loan-ui:v3      │        │  │
+│  │  └──────────────────┘    └──────────────────┘        │  │
+│  └────────────────────────────────────────────────────────┘  │
+│                                                               │
+│  Public Access:                                              │
+│  • API: http://EC2_IP:8000                                   │
+│  • UI:  http://EC2_IP:8501                                   │
+└──────────────────────────────────────────────────────────────┘
+
 ## 🎯 Key Technical Achievements
 
 ### **ML Engineering**
@@ -333,6 +381,7 @@ All experiments synced to DagShub for:
 * ✅ Containerized deployment (Docker)
 * ✅ Model versioning (DVC + MLflow)
 * ✅ Remote collaboration (DagShub)
+* ✅ Cloud deployment (AWS EC2)
 
 ### **Software Engineering**
 * ✅ REST API (FastAPI)
@@ -354,7 +403,7 @@ All experiments synced to DagShub for:
 | **DevOps** | Docker, Docker Compose |
 | **CI/CD** | GitHub Actions |
 | **Testing** | pytest, pytest-cov |
-| **Cloud** | Docker Hub, AWS S3 (DVC remote) |
+| **Cloud** | AWS EC2, Docker Hub, AWS S3 (DVC remote) |
 
 ---
 
